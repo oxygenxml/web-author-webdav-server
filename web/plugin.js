@@ -159,26 +159,12 @@
    * @return Object data JSON Object with details about samples
    */
   function retrieveSamplesDescriptor() {
-    var descriptor = null;
-
-    $.ajax({
-      type: "GET",
-      url: webdavServerPluginUrl + '.descriptor/samples.json?serverUrl=' + encodeURIComponent(window.webdavServerPluginUrl + '.descriptor/samples.json'),
-      async: false,
-      data: "",
-      success: function (data_response, success, req) {
-        if(typeof data_response === 'string') {
-          descriptor = JSON.parse(data_response);
-        } else {
-          descriptor = data_response;
-        }
-      },
-      error: function () {
-
-      }
-    });
-
-    return descriptor;
+    var descriptorUrl = webdavServerPluginUrl + '.descriptor/samples.json?serverUrl=' +
+        encodeURIComponent(window.webdavServerPluginUrl + '.descriptor/samples.json');
+    var request = new XMLHttpRequest();
+    request.open('GET', descriptorUrl, false);
+    request.send();
+    return JSON.parse(request.responseText);
   }
 
   /**
